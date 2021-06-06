@@ -1,18 +1,16 @@
-#include <stdio.h>
+#include <cstddef>
 
-static __global__ void test(
-    const int * __restrict__,
-    const int * __restrict__,
-    int * __restrict__, size_t
-);
+#include <iostream>
 
-static __device__ void plus(
-    const int * __restrict__,
-    const int * __restrict__,
-    int * __restrict__, size_t
-);
+#include <cublas_v2.h>
+#include <cusolverDn.h>
 
-int main(void) {
+int main() {
+    cusolverDnHandle_t cusolverH;
+    // cublasHandle_t cublasH;
+    
+    cusolverDnCreate(&cusolverH);
+
     size_t size;
     scanf("%zu", &size);
     int
@@ -31,33 +29,10 @@ int main(void) {
     cudaMalloc(&c_device, sizeof(int) * size);
     cudaMemcpy(a_device, a_host, sizeof(int) * size, cudaMemcpyHostToDevice);
     cudaMemcpy(b_device, b_host, sizeof(int) * size, cudaMemcpyHostToDevice);
-
-    test<<<32, 32>>>(a_device, b_device, c_device, size);
     
     cudaMemcpy(c_host, c_device, sizeof(int) * size, cudaMemcpyDeviceToHost);
     for (size_t i = 0; i < size; ++i)
     	printf("%d ", c_host[i]);
     
     return 0;
-}
-
-static __global__ void test(
-    const int * const __restrict__ a,
-    const int * const __restrict__ b,
-    int * const __restrict__ c,
-    const size_t size
-) {
-    const size_t idx = threadIdx.x + blockIdx.x * gridDim.x,
-        offset = blockDim.x * gridDim.x;
-    for (size_t i = idx; i < size; i += offset)
-        plus(a, b, c, i);
-}
-
-static inline __device__ void plus(
-    const int * const __restrict__ a,
-    const int * const __restrict__ b,
-    int * const __restrict__ c,
-    const size_t index
-) {
-    c[index] = a[index] + b[index];
 }

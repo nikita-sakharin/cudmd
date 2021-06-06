@@ -2,7 +2,7 @@ CC=nvcc
 RM=rm -frd
 CFLAGS=-std=c++14 -Werror \
 	cross-execution-space-call,deprecated-declarations,reorder
-LDFLAGS=
+LDFLAGS=-lcusolver
 LIBS=-lm
 SOURCES=main.cu
 OBJECTS=$(SOURCES:.cu=.o)

@@ -4,7 +4,7 @@ CFLAGS=-std=c++14 -Werror \
 	cross-execution-space-call,deprecated-declarations,reorder
 LDFLAGS=-lcusolver
 LIBS=-lm
-SOURCES=main.cu
+SOURCES=main.cu cudmd.cu
 OBJECTS=$(SOURCES:.cu=.o)
 EXECUTABLE=main
 

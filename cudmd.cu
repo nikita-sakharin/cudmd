@@ -1,5 +1,7 @@
-#include <cassert>
+#include <assert.h>
 
 #include <cublas_v2.h>
-#include <cuda_runtime.h>
 #include <cusolverDn.h>
+
+void __host__ cudmd() {
+}

@@ -25,7 +25,7 @@ private:
     static_assert(
         std::is_same_v<Status, cublasStatus_t> ||
         std::is_same_v<Status, cusolverStatus_t>,
-        "template argument Status must have type either
+        "template argument Status must have type either"
         "cublasStatus_t or cusolverStatus_t"
     );
 

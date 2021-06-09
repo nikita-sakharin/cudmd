@@ -3,9 +3,11 @@
 
 #include <exception> // exception
 #include <iostream> // cerr, endl
-#include <type_traits> // is_scalar
+#include <type_traits> // is_invocable, is_scalar
 
-template<typename Handle, typename Create, typename Destroy>
+#include <cudmd/error_handling.h>
+
+template<typename Handle, typename Status, Status (*Create)(Handle *), Status (*Destroy)(Handle)>
 class basic_handle final {
 public:
     __host__ inline basic_handle();
@@ -23,26 +25,19 @@ private:
     static_assert(std::is_scalar<Handle>::value,
         "template argument Handle must be scalar"
     );
-    static_assert(
-        std::is_invocable<Create, Handle *>,
-        "Create must be invocable with args: (Handle *)"
-    );
-    static_assert(
-        std::is_invocable<Destroy, Handle>,
-        "Destroy must be invocable with args: (Handle)"
-    );
 
     Handle handle_;
 };
 
-template<typename Handle>
-inline basic_handle<Handle>::basic_handle() {
+template<typename Handle, typename Status, Status (*Create)(Handle *), Status (*Destroy)(Handle)>
+__host__ inline basic_handle<Handle, Status, Create, Destroy>::basic_handle() {
     throw_if_error(Create(&handle_), "basic_handle::basic_handle: Create");
 }
 
-template<typename Handle>
-inline basic_handle<Handle>::~basic_handle() noexcept {
-    using std::cerr, std::endl, std::exception;
+template<typename Handle, typename Status, Status (*Create)(Handle *), Status (*Destroy)(Handle)>
+__host__ inline basic_handle<Handle, Status, Create, Destroy>::~basic_handle(
+) noexcept {
+    using std::cerr; using std::endl; using std::exception;
  
     try {
     	throw_if_error(Destroy(handle_),
@@ -55,8 +50,9 @@ inline basic_handle<Handle>::~basic_handle() noexcept {
     }
 }
 
-template<typename Handle>
-inline basic_handle<Handle>::handle() const noexcept {
+template<typename Handle, typename Status, Status (*Create)(Handle *), Status (*Destroy)(Handle)>
+__host__ inline Handle basic_handle<Handle, Status, Create, Destroy>::handle(
+) const noexcept {
     return handle_;
 }
 

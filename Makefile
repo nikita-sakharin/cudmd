@@ -9,7 +9,7 @@ SRCDIR=src
 OBJDIR=obj
 BINDIR=bin
 SOURCES=$(wildcard $(SRCDIR)/*.cu)
-OBJECTS=$(SOURCES:$(SRCDIR)/.cu=$(OBJDIR)/.o)
+OBJECTS=$(SOURCES:$(SRCDIR)/%.cu=$(OBJDIR)/%.o)
 EXECUTABLE=main
 
 all: $(SOURCES) $(EXECUTABLE)

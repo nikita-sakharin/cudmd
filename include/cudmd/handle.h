@@ -28,7 +28,7 @@ private:
         "Create must be invocable with args: (Handle *)"
     );
     static_assert(
-        std::is_invocable<Create, Handle *>,
+        std::is_invocable<Destroy, Handle>,
         "Destroy must be invocable with args: (Handle)"
     );
 

@@ -3,12 +3,12 @@
 
 #include <stdexcept> // runtime_error
 #include <string> // string
-#include <type_traits> // is_same_v
+#include <type_traits> // is_same
 
 #include <cublas_v2.h> //
 #include <cusolverDn.h> //
 
-template<class Status>
+template<typename Status>
 class basic_error final : public std::runtime_error {
 public:
     basic_error(Status, const std::string &);
@@ -23,8 +23,8 @@ public:
 
 private:
     static_assert(
-        std::is_same_v<Status, cublasStatus_t> ||
-        std::is_same_v<Status, cusolverStatus_t>,
+        std::is_same<Status, cublasStatus_t>::value ||
+        std::is_same<Status, cusolverStatus_t>::value,
         "template argument Status must have type either"
         "cublasStatus_t or cusolverStatus_t"
     );
@@ -32,7 +32,7 @@ private:
     Status status_;
 };
 
-template<class E>
+template<class Status>
 inline void throw_if_error(const Status status) {
     
 }

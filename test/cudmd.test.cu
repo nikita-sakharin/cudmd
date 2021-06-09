@@ -3,7 +3,11 @@
 
 #include <gtest/gtest.h>
 
-using std::ios_base, std::ofstream;
+#include <cudmd/types.h>
 
-TEST(CudmdTest, TOOOOOOOOOOOOOODOOOOOOOOOOOOOOO) { 
+using std::ios_base;
+using std::ofstream;
+
+TEST(CudmdTest, ToDo) {
+    ASSERT_EQ(1, 1);
 }

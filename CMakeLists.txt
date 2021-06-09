@@ -9,9 +9,10 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-include_directories("${PROJECT_SOURCE_DIR}/include")
-# set(CUDA_FLAGS -Werror cross-execution-space-call,deprecated-declarations,reorder)
-# add_compile_options("$<$<CUDA_COMPILER_ID:NVIDIA>:${CUDA_FLAGS}>")
+set(CUDAFLAGS -Werror
+    cross-execution-space-call,deprecated-declarations,reorder
+)
+add_compile_options("$<$<COMPILE_LANG_AND_ID:CUDA,NVIDIA>:${CUDAFLAGS}>")
 
 add_subdirectory(lib/googletest)
 add_subdirectory(src)

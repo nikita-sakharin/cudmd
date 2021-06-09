@@ -55,10 +55,10 @@ __host__ inline const char *basic_error<Code>::what() const noexcept {
     return std::runtime_error::what();
 }
 
-template<typename Code, typename ... Types>
-__host__ inline void throw_if_error(const Code code, Types ... args) {
+template<typename Code, typename... Types>
+__host__ inline void throw_if_error(const Code code, const Types &...args) {
     if (code != Code())
-        throw basic_error<Code>(code, args ...);
+        throw basic_error<Code>(code, args...);
 }
 
 #endif

@@ -27,11 +27,14 @@ private:
     Code code_;
 };
 
+template<typename Code, typename... Types>
+__host__ inline void throw_if_error(const Code code, const Types &...);
+
 template<typename Code>
 __host__ inline basic_error<Code>::basic_error(
     const Code code,
     const std::string &what
-) : runtime_error((what.size() > 0 ? what + ": " : what) + std::to_string(code)),
+) : runtime_error((what.empty() ? what : what + ": ") + std::to_string(code)),
     code_(code) {}
 
 template<typename Code>

@@ -2,10 +2,14 @@ CC=nvcc
 RM=rm -frd
 CFLAGS=-std=c++14 -Werror \
 	cross-execution-space-call,deprecated-declarations,reorder
-LDFLAGS=-lcusolver
+LDFLAGS=-lcublas -lcusolver
 LIBS=-lm
-SOURCES=main.cu cudmd.cu
-OBJECTS=$(SOURCES:.cu=.o)
+INCDIR=include
+SRCDIR=src
+OBJDIR=obj
+BINDIR=bin
+SOURCES=$(wildcard $(SRCDIR)/*.cu)
+OBJECTS=$(SOURCES:$(SRCDIR)/.cu=$(OBJDIR)/.o)
 EXECUTABLE=main
 
 all: $(SOURCES) $(EXECUTABLE)
@@ -20,7 +24,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) $(LDLIBS) -o $@
 
 $(OBJECTS): $(SOURCES)
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -I$(INCDIR) -c $(CFLAGS) $< -o $@
 
 clean:
 	$(RM) $(OBJECTS) $(EXECUTABLE)

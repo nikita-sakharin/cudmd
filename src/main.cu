@@ -5,6 +5,8 @@
 #include <cuda_runtime.h>
 #include <cusolverDn.h>
 
+#include <cudmd/error_handling.h>
+
 int main() {
     return 0;
 }

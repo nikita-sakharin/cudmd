@@ -3,26 +3,38 @@
 
 #include <stdexcept> // runtime_error
 #include <string> // string
+#include <type_traits> // is_same_v
+
+#include <cublas_v2.h> //
+#include <cusolverDn.h> //
 
 template<class Status>
-class cuda_error final : public std::runtime_error {
+class basic_error final : public std::runtime_error {
 public:
-    cuda_error(Status, const std::string &);
-    cuda_error(Status, const char *);
-    cuda_error(Status);
-    cuda_error(const cuda_error &) noexcept = default;
-    cuda_error &operator=(const cuda_error &) noexcept = default;
-    virtual ~cuda_error() noexcept;
+    basic_error(Status, const std::string &);
+    basic_error(Status, const char *);
+    basic_error(Status);
+    basic_error(const basic_error &) noexcept = default;
+    basic_error &operator=(const basic_error &) noexcept = default;
+    virtual ~basic_error() noexcept;
 
     Status code() const noexcept;
     const char *what() const noexcept override;
 
 private:
-    Status error;
+    static_assert(
+        std::is_same_v<Status, cublasStatus_t> ||
+        std::is_same_v<Status, cusolverStatus_t>,
+        "template argument Status must have type either
+        "cublasStatus_t or cusolverStatus_t"
+    );
+
+    Status status_;
 };
 
 template<class E>
-void throw_if_error(const E& e) {
+inline void throw_if_error(const Status status) {
+    
 }
 
 #endif

@@ -1,6 +1,6 @@
-#ifndef CUDMD_H
-#define CUDMD_H
+#ifndef CUDMD_CUDMD_H
+#define CUDMD_CUDMD_H
 
-void __host__ cudmd();
+__host__ void cudmd();
 
 #endif

@@ -3,5 +3,7 @@
 #include <cublas_v2.h>
 #include <cusolverDn.h>
 
-void __host__ cudmd() {
+#include <cudmd/cudmd.h>
+
+__host__ void cudmd() {
 }

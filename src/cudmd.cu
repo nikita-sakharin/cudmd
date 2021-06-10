@@ -21,7 +21,11 @@ using std::size_t;
 using thrust::device_ptr;
 using thrust::tuple;
 
-__host__ tuple<> cudmd(device_ptr<cuDoubleComplex> a_ptr,
+__host__ tuple<
+    device_vector<cuDoubleComplex>,
+    device_vector<cuDoubleComplex>, device_vector<cuDoubleComplex>
+> cudmd(
+    device_ptr<cuDoubleComplex> a_ptr,
     const int64_t m, const int64_t n, const int64_t k,
     const int64_t p = 2 * k, const int64_t niters = 2,
 ) {
@@ -47,32 +51,21 @@ __host__ tuple<> cudmd(device_ptr<cuDoubleComplex> a_ptr,
     device_vector<char> device_workspace(device_size);
     host_vector<char> host_workspace(host_size);
 
-    throw_if_error(cusolverDnXgesvdr(
-        handle.handle(),
-        params.handle(),
-        signed char jobu,
-        signed char jobv,
-        int64_t m,
-        int64_t n,
-        int64_t k,
-        int64_t p,
-        int64_t niters,
-        CUDA_C_64F,
-        void *A,
-        int64_t lda,
-        CUDA_C_64F,
-        void *Srand,
-        CUDA_C_64F,
-        void *Urand,
-        int64_t ldUrand,
-        CUDA_C_64F,
-        void *Vrand,
-        int64_t ldVrand,
-        CUDA_C_64F,
-        void *bufferOnDevice,
-        size_t workspaceInBytesOnDevice,
-        void *bufferOnHost,
-        size_t workspaceInBytesOnHost,
-        int *d_info
-    ), "cudmd: cusolverDnXgesvdr");
+    throw_if_error(
+        cusolverDnXgesvdr(
+            handle.handle(), params.handle(),
+            'S', 'S', m, n, k, p, niters,
+            CUDA_C_64F, a_ptr.get(), int64_t lda,
+            CUDA_C_64F, s_vector.get(),
+            CUDA_C_64F, u_vector.get(), int64_t ldUrand,
+            CUDA_C_64F, u_vector.get(), int64_t ldVrand,
+            CUDA_C_64F,
+            device_workspace.data(), device_size,
+            host_workspace.data(), host_size,
+            int *d_info
+        ),
+        "cudmd: cusolverDnXgesvdr"
+    );
+
+    return
 }

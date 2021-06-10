@@ -4,15 +4,10 @@
 #include <iostream>
 
 #include <cublas_v2.h>
-#include <cuda_runtime.h>
+#include <cusolverDn.h>
 
-#include <cudmd/error_handling.h>
-#include <cudmd/handle.h>
-
-using cublas_error = basic_error<cublasStatus_t>;
-using cublas_handle = basic_handle<cublasHandle_t, cublasStatus_t,
-    cublasCreate, cublasDestroy
->;
+#include <cudmd/cublas_helpers.h>
+#include <cudmd/cusolverDn_helpers.h>
 
 int main() {
     cublas_error
@@ -27,7 +22,6 @@ int main() {
     	<< "code: " << j.code() << "\nwhat:\n" << j.what() << '\n';
     std::string what("test");
     std::cout << &what << '\n';
-    // throw_if_error(CUBLAS_STATUS_NOT_INITIALIZED, what);
     
     cublas_handle l;
 

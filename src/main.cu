@@ -29,7 +29,7 @@ int main() {
     std::cout << &what << '\n';
     // throw_if_error(CUBLAS_STATUS_NOT_INITIALIZED, what);
     
-    cublas_handle{};
+    cublas_handle l;
 
     return 0;
 }

@@ -20,10 +20,9 @@ int main() {
     	<< "code: " << h.code() << "\nwhat:\n" << h.what() << '\n'
     	<< "code: " << i.code() << "\nwhat:\n" << i.what() << '\n'
     	<< "code: " << j.code() << "\nwhat:\n" << j.what() << '\n';
-    std::string what("test");
-    std::cout << &what << '\n';
-    
-    cublas_handle l;
+
+    cublas_handle k;
+    cusolverDn_handle l;
 
     return 0;
 }

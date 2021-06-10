@@ -1,7 +1,7 @@
 #include <cstdint>
 
-#include <cublas_v2.h>
 #include <cuComplex.h>
+#include <cublas_v2.h>
 #include <cusolverDn.h>
 
 #include <thrust/device_vector.h>

@@ -40,7 +40,7 @@ template<typename Handle, typename Status,
     Status (*Create)(Handle *), Status (*Destroy)(Handle)>
 __host__ inline basic_handle<Handle, Status, Create, Destroy>::~basic_handle(
 ) noexcept {
-    using std::cerr; using std::endl; using std::exception;
+    using namesapce std;
 
     try {
     	throw_if_error(Destroy(handle_),

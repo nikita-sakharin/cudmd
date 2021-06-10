@@ -47,7 +47,7 @@ __host__ inline basic_handle<Handle, Status, Create, Destroy>::~basic_handle(
     	    "basic_handle::~basic_handle: Destroy"
     	);
     } catch (const exception &except) {
-#	ifndef NDEBUG
+#       ifndef NDEBUG
         cerr << except.what() << endl;
 #       endif
     } catch (...) {}

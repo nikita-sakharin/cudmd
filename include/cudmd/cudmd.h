@@ -10,7 +10,7 @@ __host__ thrust::tuple<
     thrust::device_vector<cuDoubleComplex>,
     thrust::device_vector<cuDoubleComplex>
 > cudmd(
-    device_ptr<cuDoubleComplex>,
+    thrust::device_ptr<cuDoubleComplex>,
     int64_t, int64_t, int64_t k,
     int64_t = 2 * k, int64_t = 2,
 );

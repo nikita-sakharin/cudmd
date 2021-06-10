@@ -8,7 +8,8 @@
 
 using cusolver_error = basic_error<cusolverStatus_t>;
 using cusolverDn_handle = basic_handle<cusolverDnHandle_t, cusolverStatus_t,
-    cusolverDnCreate, cusolverDnDestroy
->;
+    cusolverDnCreate, cusolverDnDestroy>;
+using cusolverDn_params = basic_handle<cusolverDnParams_t, cusolverStatus_t,
+    cusolverDnCreateParams, cusolverDnDestroyParams>;
 
 #endif

@@ -47,7 +47,7 @@ __host__ inline basic_handle<Handle, Status, Create, Destroy>::~basic_handle(
 #	ifndef NDEBUG
         cerr << except.what() << endl;
 #       endif
-    }
+    } catch (...) {}
 }
 
 template<typename Handle, typename Status, Status (*Create)(Handle *), Status (*Destroy)(Handle)>

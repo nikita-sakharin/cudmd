@@ -1,1 +1,11 @@
+*.a
+*.app
+*.dll
+*.dylib
+*.exe
+*.lib
+*.o
+*.out
+*.so
+
 .ipynb_checkpoints

@@ -17,6 +17,7 @@ using thrust::complex;
 using thrust::device_vector;
 using thrust::generate;
 using thrust::host_vector;
+using thrust::tie;
 
 TEST(CudmdTest, First) {
     static const size_t x_size = (1U << 10) + 1U, t_size = (1U << 8) + 1U;
@@ -37,6 +38,7 @@ TEST(CudmdTest, First) {
         }
     );
     device_vector<complex<dbl>> device_x_upper = host_x_upper;
-    cudmd(device_x_upper.data(), x_size, t_size, 2);
-    ASSERT_EQ(1, 1);
+    host_vector<dbl> s;
+    host_vector<complex<dbl>> u, v;
+    tie(s, u, v) = cudmd(device_x_upper.data(), x_size, t_size, 2);
 }

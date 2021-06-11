@@ -2,7 +2,7 @@
 
 #include <cublas_v2.h>
 #include <cusolverDn.h> // cusolverDnXgesvdr*
-#include <library_types.h> // CUDA_C_64F
+#include <library_types.h> // CUDA_C_64F, CUDA_R_64F
 
 #include <thrust/complex.h> // complex
 #include <thrust/device_ptr.h> // device_ptr

@@ -1,7 +1,6 @@
 #include <cstddef> // size_t
 
 #include <cublas_v2.h>
-#include <cuComplex.h> // cuDoubleComplex
 #include <cusolverDn.h>
 #include <library_types.h> // CUDA_C_64F
 
@@ -11,10 +10,10 @@
 #include <thrust/host_vector.h> // host_vector
 #include <thrust/tuple.h> // make_tuple, tuple
 
-#include <cudmd/error_handling.h>
 #include <cudmd/cublas_helpers.h>
 #include <cudmd/cudmd.h>
 #include <cudmd/cusolverDn_helpers.h>
+#include <cudmd/error_handling.h>
 #include <cudmd/types.h>
 
 using std::size_t;
@@ -26,24 +25,24 @@ using thrust::make_tuple;
 using thrust::tuple;
 
 __host__ tuple<
-    device_vector<complex<dbl>>,
+    device_vector<dbl>,
     device_vector<complex<dbl>>, device_vector<complex<dbl>>
 > cudmd(
     const device_ptr<complex<dbl>> a_ptr,
     const size_t m, const size_t n, const size_t k
 ) {
-    const int64_t p = 2 * k, niters = 2;
     cusolverDn_handle handle;
     cusolverDn_params params;
+    const int64_t p = 2 * k, niters = 2;
 
-    device_vector<complex<dbl>> s_vector(k),
-        u_vector(m * k), v_vector((n - 1) * k);
+    device_vector<dbl> s_vector(k);
+    device_vector<complex<dbl>> u_vector(m * k), v_vector((n - 1) * k);
     size_t device_size, host_size;
     throw_if_error(cusolverDnXgesvdr_bufferSize(
         handle.handle(), params.handle(),
         'S', 'S', m, n - 1, k, p, niters,
         CUDA_C_64F, a_ptr.get(), m,
-        CUDA_C_64F, s_vector.data().get(),
+        CUDA_R_64F, s_vector.data().get(),
         CUDA_C_64F, u_vector.data().get(), m,
         CUDA_C_64F, v_vector.data().get(), n - 1,
         CUDA_C_64F,
@@ -57,7 +56,7 @@ __host__ tuple<
         handle.handle(), params.handle(),
         'S', 'S', m, n - 1, k, p, niters,
         CUDA_C_64F, a_ptr.get(), m,
-        CUDA_C_64F, s_vector.data().get(),
+        CUDA_R_64F, s_vector.data().get(),
         CUDA_C_64F, u_vector.data().get(), m,
         CUDA_C_64F, v_vector.data().get(), n - 1,
         CUDA_C_64F,

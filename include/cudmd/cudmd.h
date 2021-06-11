@@ -11,7 +11,7 @@
 #include <cudmd/types.h>
 
 __host__ thrust::tuple<
-    thrust::device_vector<thrust::complex<dbl>>,
+    thrust::device_vector<dbl>,
     thrust::device_vector<thrust::complex<dbl>>,
     thrust::device_vector<thrust::complex<dbl>>
 > cudmd(

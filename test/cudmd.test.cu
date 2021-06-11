@@ -9,7 +9,8 @@
 
 #include <gtest/gtest.h>
 
-#include <cudmd/types.h> // dbl
+#include <cudmd/cudmd.h>
+#include <cudmd/types.h>
 
 using std::size_t;
 using thrust::complex;
@@ -22,8 +23,8 @@ TEST(CudmdTest, First) {
     static const complex<dbl> x_start = -5.0, x_stop = 5.0;
     static const dbl t_start = 0.0, t_stop = 4.0 * CUDART_PI;
 
-    host_vector<complex<dbl>> host_x_upper(x_size * t_size);
-    generate(x_upper.begin(), x_upper.end(),
+    host_vector<complex<dbl>> host_x_upper(t_size * x_size);
+    generate(host_x_upper.begin(), host_x_upper.end(),
         [n = 0U]() mutable noexcept -> complex<dbl> {
             const size_t i = n / x_size, j = n % x_size;
             const complex<dbl>
@@ -36,6 +37,6 @@ TEST(CudmdTest, First) {
         }
     );
     device_vector<complex<dbl>> device_x_upper = host_x_upper;
-    // cudmd(x, );
+    cudmd(device_x_upper.data(), x_size, t_size, 2);
     ASSERT_EQ(1, 1);
 }

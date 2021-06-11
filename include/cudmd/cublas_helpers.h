@@ -3,8 +3,8 @@
 
 #include <cublas_v2.h> // cublas*
 
-#include <cudmd/error_handling.h> // basic_error
-#include <cudmd/handle.h> // basic_handle
+#include <cudmd/error_handling.h>
+#include <cudmd/handle.h>
 
 using cublas_error = basic_error<cublasStatus_t>;
 using cublas_handle = basic_handle<cublasHandle_t, cublasStatus_t,

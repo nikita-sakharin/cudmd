@@ -33,7 +33,7 @@ __host__ tuple<
 ) {
     cusolverDn_handle handle;
     cusolverDn_params params;
-    const int64_t p = 2 * k, niters = 2;
+    const size_t p = 2 * k, niters = 2;
 
     device_vector<dbl> s_vector(k);
     device_vector<complex<dbl>> u_vector(m * k), v_vector((n - 1) * k);

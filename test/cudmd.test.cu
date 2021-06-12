@@ -34,6 +34,7 @@ TEST(CudmdTest, First) {
             const complex<dbl>
                 f1 = 1.0 / cosh(x + 3.0) * exp(complex<dbl>(0.0, 2.3 * t)),
                 f2 = 2.0 / cosh(x) * tanh(x) * exp(complex<dbl>(0.0, 2.8 * t));
+            ++n;
             return f1 + f2;
         }
     );

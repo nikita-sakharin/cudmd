@@ -40,6 +40,6 @@ TEST(CudmdTest, First) {
     );
     device_vector<complex<dbl>> device_x_upper = host_x_upper;
     host_vector<dbl> s;
-    host_vector<complex<dbl>> u, vh;
-    tie(s, u, vh) = cudmd(device_x_upper.data(), x_size, t_size, 2);
+    host_vector<complex<dbl>> u, vt;
+    tie(s, u, vt) = cudmd(device_x_upper.data(), x_size, t_size, 2);
 }

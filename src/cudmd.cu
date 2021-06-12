@@ -7,10 +7,8 @@
 #include <library_types.h> // CUDA_C_64F, CUDA_R_64F
 
 #include <thrust/complex.h> // complex
-#include <thrust/copy.h> // copy_n
 #include <thrust/device_ptr.h> // device_ptr
 #include <thrust/device_vector.h> // device_vector
-#include <thrust/execution_policy.h> // device
 #include <thrust/host_vector.h> // host_vector
 #include <thrust/tuple.h> // make_tuple, tuple
 
@@ -23,8 +21,6 @@
 using std::out_of_range;
 using std::size_t;
 using thrust::complex;
-using thrust::copy_n;
-using thrust::device;
 using thrust::device_ptr;
 using thrust::device_vector;
 using thrust::host_vector;
@@ -76,13 +72,6 @@ __host__ tuple<
     
     s_vector.resize(rank);
     u_vector.resize(m * rank);
-    for (size_t i = 1; i < rank; ++i)
-        copy_n(
-            device,
-            vt_vector.begin() + i * k, rank,
-            vt_vector.begin() + i * rank
-        );
-    vt_vector.resize(rank * k);
 
     return make_tuple(s_vector, u_vector, vt_vector);
 }

@@ -51,7 +51,7 @@ __host__ tuple<
 
     device_vector<char> device_workspace(device_size);
     host_vector<char> host_workspace(host_size);
-    int info;
+    device_vector<int> device_info(1);
     throw_if_error(cusolverDnXgesvdr(
         handle.handle(), params.handle(),
         'S', 'S', m, n - 1, k, p, niters,
@@ -62,7 +62,7 @@ __host__ tuple<
         CUDA_C_64F,
         device_workspace.data().get(), device_size,
         host_workspace.data(), host_size,
-        &info
+        device_info.data().get()
     ), "cudmd: cusolverDnXgesvdr");
 
     return make_tuple(s_vector, u_vector, v_vector);

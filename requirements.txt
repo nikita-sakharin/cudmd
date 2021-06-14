@@ -2,4 +2,5 @@ wheel~=0.36.2
 numpy~=1.19.5
 matplotlib~=3.3.4
 Pillow~=8.2.0
+opencv-python~=4.5.2.54
 pydmd~=0.3.3

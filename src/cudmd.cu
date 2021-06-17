@@ -69,7 +69,7 @@ __host__ tuple<
         host_workspace.data(), host_size,
         device_info.data().get()
     ), "cudmd: cusolverDnXgesvd");
-    
+
     s_vector.resize(rank);
     u_vector.resize(m * rank);
 
